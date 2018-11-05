@@ -6,7 +6,6 @@ class SignIn extends React.Component {
 		this.state = {
 			signInEmail: '',
 			signInPasword: '',
-			hasBadCredentials: false
 		}
 	}
 
@@ -33,7 +32,7 @@ class SignIn extends React.Component {
 					this.props.loadUser(user);
 					this.props.onRouteChange('home');
 				}
-			}).catch(400).then(this.setState({hasBadCredentials: true}))
+			}).catch(400).then(console.log('bad credentials'))
 	}
 
 	render() {
@@ -56,9 +55,6 @@ class SignIn extends React.Component {
 				    <div className="">
 				      <input onClick={this.onSubmitSignIn} className="b ph3 pv2 input-reset white ba b--white bg-transparent grow pointer f6 dib" type="submit" value="sign in"/>
 				    </div>
-				    <p className="f6 link dim red db">
-				    	{this.state.hasBadCredentials ? 'credentials incorrect' : ''}
-				    </p>
 				    <div className="lh-copy mt3">
 				      <p className="f6 link dim white db pointer" onClick={() => this.props.onRouteChange('register')}>or go to the register page</p>
 				    </div>

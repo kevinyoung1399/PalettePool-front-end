@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Clarifai from 'clarifai';
 import Particles from 'react-particles-js';
 import Navigation from './components/Navigation/Navigation';
 import SignIn from './components/SignIn/SignIn';
@@ -7,10 +6,6 @@ import Register from './components/Register/Register';
 import Palette from './components/Palette/Palette';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import './App.css';
-
-const app = new Clarifai.App({
- apiKey: 'cb3b5289fcec45ed9c6b9ba2a35d5feb'
-});
 
 const bubbles = {
 "particles": {
@@ -181,24 +176,17 @@ class App extends Component {
   onDetect = () => {
     this.setState({imageURL: this.state.input});
     this.setState({cols: []});
-    app.models.predict("eeed0b6733a644cea07cf4c60f87ebb7", this.state.input)
+      fetch('http://localhost:3000/imageurl', {
+        method: 'post',
+        headers: {'Content-Type' : 'application/json'},
+        body: JSON.stringify({
+          input: this.state.input
+        })
+      })
+    .then(response => response.json())
     .then(response => {
       if (response) {
-
         this.recieveColours(response)
-
-        // fetch('http://localhost:3000/palette', {
-        //   method: 'put',
-        //   headers: {'Content-Type': 'application/json'},
-        //   body: JSON.stringify({
-        //     id: this.state.user.id,
-        //     palette: this.state.user.palette
-        //   })
-        // })
-        //   .then(response => response.json())
-        //   .then(colours => {
-        //     this.setState(Object.assign(this.state.user, {entries: colours}))
-        //   })
       }
     })
     .catch(err => console.log(err));
