@@ -176,7 +176,7 @@ class App extends Component {
   onDetect = () => {
     this.setState({imageURL: this.state.input});
     this.setState({cols: []});
-      fetch('http://localhost:3000/imageurl', {
+      fetch('https://glacial-taiga-57255.herokuapp.com/imageurl', {
         method: 'post',
         headers: {'Content-Type' : 'application/json'},
         body: JSON.stringify({
